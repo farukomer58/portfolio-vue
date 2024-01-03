@@ -1,0 +1,19 @@
+{
+  "nav":{
+    "home": "Home",
+    "portfolio": "Portfolio",
+    "profile": "Your Profile",
+    "settings": "Settings",
+    "signout": "Sign Out"
+  },
+  "home": {
+    "title": "Welcome to my Portfolio"
+  },
+  "portfolio": {
+    "title": "Portfolio"
+  },
+  "register": {
+    "accept": "I accept Music's {0}",
+    "tos": "Terms of Service"
+  }
+}
