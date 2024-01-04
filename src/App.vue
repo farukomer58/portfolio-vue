@@ -1,5 +1,6 @@
 
 <template>
+  <div class="flex-grow">
   <!-- Navbar -->
   <app-navbar></app-navbar>
 
@@ -9,14 +10,19 @@
       <component :is="Component"></component>
     </transition>
   </router-view>
+
+  <app-footer></app-footer>
+  </div>
 </template>
 
 <script>
 import AppNavbar from './components/app/AppNavbar.vue'
+import AppFooter from './components/app/AppFooter.vue';
 
 export default {
   components: {
-    AppNavbar
+    AppNavbar,
+    AppFooter
   },
 }
 </script>
