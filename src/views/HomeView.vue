@@ -45,7 +45,6 @@
     <!-- Section for highlighted portofilio items with link to view full portofolio website-->
     <!-- Get 3 most recent portfolioitems -->
     <section-recent-portfolio-items></section-recent-portfolio-items>
-
   </main>
 </template>
 
@@ -63,6 +62,5 @@ export default {
   setup() {
     
   }
-
 }
 </script>
