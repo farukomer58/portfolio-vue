@@ -34,7 +34,8 @@
                     <li>
                         <strong>Demo: </strong>
                         <a :href="portfolioItem.demo" target="_blank" rel="noopener noreferrer">
-                            <button class="bg-red-500 text-white px-4 py-2 rounded demo" :disabled="!portfolioItem.demo">Demo</button>
+                            <button class="bg-red-500 text-white px-4 py-2 rounded demo"
+                                :disabled="!portfolioItem.demo">Demo</button>
                         </a>
                     </li>
                 </ul>
@@ -89,9 +90,10 @@ export default {
 
 <style scoped>
 /* Additional styling if needed */
-.demo:disabled{
+.demo:disabled {
     background-color: gray;
 }
+
 .custom-carousel {
     position: relative;
 }

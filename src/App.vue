@@ -2,7 +2,7 @@
 <template>
   <div class="flex-grow">
     <!-- Navbar -->
-    <app-navbar></app-navbar>
+    <app-navbar />
 
     <!-- Placeholder for routes with ANIMATION -->
     <router-view v-slot="{ Component }">
@@ -12,7 +12,7 @@
     </router-view>
 
     <!-- Footer -->
-    <app-footer></app-footer>
+    <app-footer />
   </div>
 </template>
 
@@ -30,6 +30,12 @@ export default {
 
 
 <style >
+#app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
 section {
   margin-bottom: 15px;
 }
@@ -45,5 +51,9 @@ section {
 .fade-leave-to {
   transition: all 0s lienar;
   opacity: 0;
+}
+
+#footer {
+  margin-top: auto;
 }
 </style>

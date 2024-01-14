@@ -38,7 +38,7 @@ export const usePortfolioStore = defineStore("portfolio", () => {
         "JPA",
       ],
       demo: "https://vanstreek2-fe-app-staging.herokuapp.com/",
-      category: [1, 2, 5],
+      category: [1, 2, 4],
       tags: [],
     }),
     createPortfolioItem({
@@ -72,7 +72,7 @@ export const usePortfolioStore = defineStore("portfolio", () => {
         "SQL",
       ],
       demo: null,
-      category: [1, 2, 5],
+      category: [1, 2, 4],
       tags: [],
     }),
     createPortfolioItem({
@@ -108,7 +108,7 @@ export const usePortfolioStore = defineStore("portfolio", () => {
         "SQL",
       ],
       demo: null,
-      category: [1, 2, 5],
+      category: [1, 2, 4],
       tags: [],
     }),
     createPortfolioItem({
@@ -143,7 +143,7 @@ export const usePortfolioStore = defineStore("portfolio", () => {
         "SQL",
       ],
       demo: null,
-      category: [1, 2],
+      category: [1, 6],
       tags: [],
     }),
   ]);
@@ -152,8 +152,10 @@ export const usePortfolioStore = defineStore("portfolio", () => {
     { id: 1, name: "All Items" },
     { id: 2, name: "Web Development" },
     { id: 3, name: "Game Development" },
-    { id: 4, name: "Vue.JS" },
-    { id: 5, name: "Backend Development" },
+    { id: 4, name: "School Projects" },
+    { id: 5, name: "Vue.JS" },
+    { id: 6, name: "Other" },
+
     // School: 'School Projects',
     // Other: 'Other',
   ]);
@@ -167,16 +169,11 @@ export const usePortfolioStore = defineStore("portfolio", () => {
     const filtered = portfolioItems.value.filter((item) => {
       return item.id.toString() === portfolioId;
     });
-    console.log(filtered[0])
-    console.log(portfolioItems.value[0])
 
     return filtered[0];
   }
 
-
   const getPortfolioItemsByCategory = (categoryId) => {
-    console.log(categoryId);
-    console.log("FILTER");
     // Filter portfolio items by category
     return portfolioItems.value.filter((item) =>
       item.category.some((categor) => categor === categoryId)
