@@ -173,11 +173,6 @@ export const usePortfolioStore = defineStore("portfolio", () => {
     return filtered[0];
   }
 
-  const getRecentPortfolioItems = (limit) => {
-    // Simulate an API call, replace with your actual logic
-    console.log(portfolioItems.value.slice(0, limit));
-    return portfolioItems.value.slice(0, limit);
-  };
 
   const getPortfolioItemsByCategory = (categoryId) => {
     console.log(categoryId);
@@ -192,7 +187,6 @@ export const usePortfolioStore = defineStore("portfolio", () => {
     portfolioItems,
     portfolioCategories,
     getAllPortfolioItems,
-    getRecentPortfolioItems,
     getPortfolioItemsByCategory,
     getPortfolioItemById,
   };
