@@ -4,30 +4,42 @@
 
     <!-- Category Tabs and Category Filter -->
     <div class="flex space-x-4 mb-8">
-      <button v-for="category in allPortfolioCategories" :key="category.id" @click="onSelectCategory(category)"
-        :class="{ 'bg-green-500 text-white': selectedCategory && category.id === selectedCategory.id, 'bg-gray-200': !(selectedCategory && category.id === selectedCategory.id) }"
-        class="px-4 py-2 rounded-md border border-gray-300 focus:outline-none hover:bg-gray-300">
+      <button
+        v-for="category in allPortfolioCategories"
+        :key="category.id"
+        @click="onSelectCategory(category)"
+        :class="{
+          'bg-green-500 text-white': selectedCategory && category.id === selectedCategory.id,
+          'bg-gray-200': !(selectedCategory && category.id === selectedCategory.id),
+        }"
+        class="px-4 py-2 rounded-md border border-gray-300 focus:outline-none hover:bg-gray-300"
+      >
         {{ category.name }}
       </button>
     </div>
 
-    <transition-group name="fade" tag="div" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-      <portfolio-item v-for="portfolioItem in paginatedPortfolioItems" :key="portfolioItem.id"
-        :portfolio-details="portfolioItem"></portfolio-item>
-    </transition-group>
+    <div class="relative">
+      <transition-group name="fade" tag="div" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <portfolio-item
+          v-for="portfolioItem in visiblePortfolioItems"
+          :key="portfolioItem.id"
+          :portfolio-details="portfolioItem"
+        ></portfolio-item>
+      </transition-group>
 
-    <!-- Pagination -->
-    <div class="p-5">
-      <button @click="loadMore" class="bg-red-500 text-white px-4 py-2 rounded" style="float:right"
-        :disabled="isLastPage">
-        See More
+      <!-- Navigation Arrows -->
+      <button @click="prevPage" class="absolute top-1/2 left-4 transform -translate-y-1/2 bg-gray-500 text-white px-4 py-2 rounded">
+        &lt;
+      </button>
+      <button @click="nextPage" class="absolute top-1/2 right-4 transform -translate-y-1/2 bg-gray-500 text-white px-4 py-2 rounded">
+        &gt;
       </button>
     </div>
   </section>
 </template>
 
 <script>
-import { ref, computed } from "vue";
+import { ref, computed, watch } from "vue";
 import PortfolioItem from "@/components/portfolio/PortfolioItem.vue";
 import { usePortfolioStore } from "@/stores/portfolio-store";
 
@@ -38,21 +50,26 @@ export default {
   },
   setup() {
     const portfolioStore = usePortfolioStore();
-    const allPortfolioCategories = computed(() => portfolioStore.portfolioCategories)
+    const allPortfolioCategories = computed(() => portfolioStore.portfolioCategories);
     const selectedCategory = ref(portfolioStore.portfolioCategories[0]);
 
     const itemsPerPage = 3;
-    const currentPage = ref(1);
+    const currentPage = ref(0);
 
-    // When selectedCategory or currentPage changes, update paginatedPortfolioItems
-    const paginatedPortfolioItems = computed(() => {
-      const startIndex = (currentPage.value - 1) * itemsPerPage;
-      const endIndex = startIndex + itemsPerPage;
+    // When selectedCategory changes, reset currentPage to 0
+    watch(selectedCategory, () => {
+      currentPage.value = 0;
+    });
+
+    // Computed property for the visible items
+    const visiblePortfolioItems = computed(() => {
       const filteredItems = selectedCategory.value
         ? portfolioStore.getPortfolioItemsByCategory(selectedCategory.value.id)
         : portfolioStore.getAllPortfolioItems();
 
-      return filteredItems.slice(0, endIndex);
+      const startIndex = currentPage.value * itemsPerPage;
+      const endIndex = startIndex + itemsPerPage;
+      return filteredItems.slice(startIndex, endIndex);
     });
 
     // Check if there are more pages
@@ -60,26 +77,42 @@ export default {
       const totalItems = selectedCategory.value
         ? portfolioStore.getPortfolioItemsByCategory(selectedCategory.value.id).length
         : portfolioStore.getAllPortfolioItems().length;
-      return currentPage.value * itemsPerPage >= totalItems;
+      return (currentPage.value + 1) * itemsPerPage >= totalItems;
     });
 
-    // Handle selecting a category 
+    // Handle selecting a category
     const onSelectCategory = (category) => {
       selectedCategory.value = category;
-      currentPage.value = 1; // Reset to first page when changing category
+      currentPage.value = 0; // Reset to the first page when changing category
     };
 
-    // Handle loading more items
-    const loadMore = () => {
-      currentPage.value += 1;
+    // Handle navigating to the previous page
+    const prevPage = () => {
+      if (currentPage.value > 0) {
+        currentPage.value -= 1;
+      } else {
+        // Wrap to the last page when on the first page
+        currentPage.value = Math.floor((visiblePortfolioItems.length - 1) / itemsPerPage);
+      }
+    };
+
+    // Handle navigating to the next page
+    const nextPage = () => {
+      if (!isLastPage.value) {
+        currentPage.value += 1;
+      } else {
+        // Wrap to the first page when on the last page
+        currentPage.value = 0;
+      }
     };
 
     return {
       allPortfolioCategories,
       selectedCategory,
-      paginatedPortfolioItems,
+      visiblePortfolioItems,
       onSelectCategory,
-      loadMore,
+      prevPage,
+      nextPage,
       isLastPage,
     };
   },
