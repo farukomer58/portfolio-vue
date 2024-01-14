@@ -1,5 +1,5 @@
 <template>
-    <section class="flex mt-8">
+    <section class="flex mt-8" id="experience">
       <!-- Experience Section -->
       <div class="flex-1 pr-8">
         <div class="text-3xl font-bold mb-4">Experience</div>

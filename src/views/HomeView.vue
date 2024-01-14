@@ -49,9 +49,9 @@
 </template>
 
 <script >
+import { onMounted } from 'vue';
 import SectionExperience from '@/components/home/SectionExperience.vue'
 import SectionRecentPortfolioItems from '@/components/home/SectionRecentPortfolioItems.vue'
-
 
 export default {
   name: "HomeView",
@@ -60,7 +60,19 @@ export default {
     SectionRecentPortfolioItems
   },
   setup() {
-    
+
+    onMounted(() => {
+      // Add JavaScript for smooth scrolling
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+          e.preventDefault();
+
+          document.querySelector(this.getAttribute('href')).scrollIntoView({
+            behavior: 'smooth'
+          });
+        });
+      });
+    })
   }
 }
 </script>

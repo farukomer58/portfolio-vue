@@ -1,17 +1,18 @@
 
 <template>
   <div class="flex-grow">
-  <!-- Navbar -->
-  <app-navbar></app-navbar>
+    <!-- Navbar -->
+    <app-navbar></app-navbar>
 
-  <!-- Placeholder for routes with ANIMATION -->
-  <router-view v-slot="{ Component }">
-    <transition name="fade" mode="out-in">
-      <component :is="Component"></component>
-    </transition>
-  </router-view>
+    <!-- Placeholder for routes with ANIMATION -->
+    <router-view v-slot="{ Component }">
+      <transition name="fade" mode="out-in">
+        <component :is="Component"></component>
+      </transition>
+    </router-view>
 
-  <app-footer></app-footer>
+    <!-- Footer -->
+    <app-footer></app-footer>
   </div>
 </template>
 
@@ -29,6 +30,10 @@ export default {
 
 
 <style >
+section {
+  margin-bottom: 15px;
+}
+
 .fade-enter-from {
   opacity: 0;
 }

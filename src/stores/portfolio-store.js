@@ -146,7 +146,6 @@ export const usePortfolioStore = defineStore("portfolio", () => {
       category: [1, 2],
       tags: [],
     }),
-    // Add more items as needed...
   ]);
 
   const portfolioCategories = ref([
@@ -165,8 +164,13 @@ export const usePortfolioStore = defineStore("portfolio", () => {
   };
 
   function getPortfolioItemById(portfolioId) {
-    console.log(portfolioId);
-    return portfolioItems.value[0];
+    const filtered = portfolioItems.value.filter((item) => {
+      return item.id.toString() === portfolioId;
+    });
+    console.log(filtered[0])
+    console.log(portfolioItems.value[0])
+
+    return filtered[0];
   }
 
   const getRecentPortfolioItems = (limit) => {

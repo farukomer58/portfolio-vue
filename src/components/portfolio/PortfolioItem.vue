@@ -8,7 +8,7 @@
         <div class="portfolio-details flex-1 ml-4">
           <h2 class="text-lg font-semibold truncate">{{ portfolioDetails.title }}</h2>
           <p class="text-sm text-gray-600 truncate">{{ portfolioDetails.shortDesc }}</p>
-          <button class="bg-blue-500 text-white px-4 py-2 rounded-full mt-2">View Details</button>
+          <button class="bg-red-500 text-white px-4 py-2 rounded-full mt-2">View Details</button>
         </div>
       </div>
     </base-card>

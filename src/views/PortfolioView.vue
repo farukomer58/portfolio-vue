@@ -1,9 +1,11 @@
 <template>
   <main>
+    <!-- View Title -->
     <section class="mb-8">
       <h1 class="text-3xl font-bold">Explore My Portfolio</h1>
     </section>
 
+    <!-- Category Tabs and Category Filter -->
     <div class="flex space-x-4 mb-8">
       <button v-for="category in portfolioStore.portfolioCategories" :key="category.id"
         @click="onSelectCategory(category)"
@@ -13,6 +15,7 @@
       </button>
     </div>
 
+    <!-- Display Filtered Portfolio Items -->
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
       <router-link v-for="portfolioItem in filteredPortfolioItems" :key="portfolioItem.id"
         :to="{ name: 'portfolio-detail', params: { id: portfolioItem.id } }" class="cursor-pointer">
@@ -34,11 +37,7 @@ export default {
     const portfolioStore = usePortfolioStore();
     const selectedCategory = ref(portfolioStore.portfolioCategories[0]);
 
-    const onSelectCategory = (category) => {
-      console.log(category)
-      selectedCategory.value = category;
-    };
-
+    // When selectedCategory changed, update filteredPortfolioItems
     const filteredPortfolioItems = computed(() => {
       if (!selectedCategory.value || selectedCategory.value.id === 1) {
         return portfolioStore.getAllPortfolioItems();
@@ -46,6 +45,12 @@ export default {
         return portfolioStore.getPortfolioItemsByCategory(selectedCategory.value.id);
       }
     });
+
+    // Handle selecting a category 
+    const onSelectCategory = (category) => {
+      console.log(category)
+      selectedCategory.value = category;
+    };
 
     return { portfolioStore, selectedCategory, filteredPortfolioItems, onSelectCategory };
   },

@@ -2,6 +2,7 @@
   "nav":{
     "home": "Home",
     "portfolio": "Portfolio",
+    "experience": "Experience",
     "profile": "Your Profile",
     "settings": "Settings",
     "signout": "Sign Out"
